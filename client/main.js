@@ -1,3 +1,10 @@
+// accounts-ui config
+Accounts.ui.config(
+	{passwordSignupFields: "USERNAME_AND_EMAIL"}
+	);
+
+
+
 /////
 // template helpers 
 /////
@@ -6,7 +13,15 @@
 Template.website_list.helpers({
 	websites:function(){
 		return Websites.find({},{sort:{vote:-1}});
-	}
+	},
+	username : function(){
+		if(Meteor.user()) {
+			// console.log(Meteor.user());
+			return Meteor.user().username;
+		} else {
+			return "anonymous";
+		}
+	}	
 });
 
 
@@ -74,6 +89,10 @@ Template.website_form.events({
 	}
 });
 
+Template.body.helpers({
+
+}
+)
 
 function increVote(website, num) {
 	Websites.update({_id:website._id},

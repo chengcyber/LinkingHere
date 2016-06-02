@@ -10,21 +10,26 @@
         <a class="navbar-brand" href="#">
           Linking Here
         </a>
+
+      </div>
+      <div>
+        {{> loginButtons}}
       </div>
     </div>
   </nav>
 
   <div class="container">
-    {{> website_form}}
     {{> website_list}}
   </div>
 </body>
 
 
 <template name="website_form">
+  {{#if currentUser}}
   <a class="btn btn-default js-toggle-website-form" href="#">
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
   </a>
+  {{/if}}
   <div id="website_form" class="hidden_div">
     <form class="js-save-website-form">
       <div class="form-group">
@@ -47,6 +52,10 @@
 
 <!-- template that displays several website items -->
 <template name="website_list">
+  <h2>
+    Welcome back ! {{username}}
+  </h2>
+  {{> website_form}}
   <ol>
   {{#each websites}}
   {{>website_item}}

@@ -67,15 +67,15 @@ Template.website_list.helpers({
 			return Websites.find({},{sort:{vote:-1,createdOn:-1}, limit:Session.get("websiteLimit")});
 		}
 	},
-	reccomends:function(){
-		Meteor.subscribe("search-websites", Session.get("reccomendFilter"));
-		if (Session.get("reccomendFilter")) {
-			console.log("reccomending");
+	recommends:function(){
+		Meteor.subscribe("search-websites", Session.get("recommendFilter"));
+		if (Session.get("recommendFilter")) {
+			console.log("recommending");
 			return Websites.find({score:{"$exists":true}}, { sort: [["score", "desc"]] });
 		}
 	},
-	reccomending_websites : function  () {
-		if (Session.get("reccomendFilter")) {
+	recommending_websites : function  () {
+		if (Session.get("recommendFilter")) {
 			return true;
 		} else {
 			return false;
@@ -175,7 +175,7 @@ Template.navbar.events({
 		var searchStr = event.target.searchStr.value;
 		console.log("searching:"+searchStr);
 		Session.set("searchFilter", searchStr);
-		Session.set("reccomendFilter", undefined);
+		Session.set("recommendFilter", undefined);
 		return false;
 	}
 });
@@ -215,7 +215,7 @@ Template.website_item.events({
 					// console.log("dislike to like +1");
 				}
 				console.log(web.title);
-				Session.set("reccomendFilter",web.title);
+				Session.set("recommendFilter",web.title);
 			}
 		} else {
 			alert("Please login to vote!");

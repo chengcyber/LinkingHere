@@ -76,11 +76,27 @@
     {{/if}}
   </h2>
   {{> website_form}}
-  <ol>
-  {{#each websites}}
-  {{>website_item}}
-  {{/each}}
-  </ol>
+  <div class="row">
+    <div class="col-sm-7">
+      <ol>
+      {{#each websites}}
+      {{>website_item}}
+      {{/each}}
+      </ol>
+    </div> <!-- col 6-->
+    <div class="col-sm-5">
+      {{#if reccomending_websites}}
+      <h3 class="col-sm-offset-2">
+      Reccomends for you
+      </h3>
+      {{/if}}
+      <ul>
+      {{#each reccomends}}
+      {{>website_item}}
+      {{/each}}
+      </ul>
+    </div> <!-- col 6 -->
+  </div> <!-- row -->
 </div>
 </template>
 

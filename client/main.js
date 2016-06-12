@@ -63,7 +63,22 @@ Template.website_list.helpers({
 			Meteor.subscribe("search-websites", Session.get("searchFilter"));
 			return Websites.find({score:{"$exists":true}}, { sort: [["score", "desc"]] });
 		} else {
+			console.log(Websites.find({},{sort:{vote:-1,createdOn:-1}, limit:Session.get("websiteLimit")}));
 			return Websites.find({},{sort:{vote:-1,createdOn:-1}, limit:Session.get("websiteLimit")});
+		}
+	},
+	reccomends:function(){
+		Meteor.subscribe("search-websites", Session.get("reccomendFilter"));
+		if (Session.get("reccomendFilter")) {
+			console.log("reccomending");
+			return Websites.find({score:{"$exists":true}}, { sort: [["score", "desc"]] });
+		}
+	},
+	reccomending_websites : function  () {
+		if (Session.get("reccomendFilter")) {
+			return true;
+		} else {
+			return false;
 		}
 	},
 	username : function(){
@@ -93,21 +108,21 @@ Template.website_list.helpers({
 			return false;
 		}
 	},
-filtering_websites:function(){
-  if (Session.get("userFilter")){// they set a filter!
-    return true;
-  } 
-  else {
-    return false;
-  }
-},
-searching_websites: function() {
-	if (Session.get("searchFilter")) {
-		return true;
-	} else {
-		return false;
+	filtering_websites:function(){
+	  if (Session.get("userFilter")){// they set a filter!
+	    return true;
+	  } 
+	  else {
+	    return false;
+	  }
+	},
+	searching_websites: function() {
+		if (Session.get("searchFilter")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-}
 });
 
 
@@ -160,6 +175,7 @@ Template.navbar.events({
 		var searchStr = event.target.searchStr.value;
 		console.log("searching:"+searchStr);
 		Session.set("searchFilter", searchStr);
+		Session.set("reccomendFilter", undefined);
 		return false;
 	}
 });
@@ -198,6 +214,8 @@ Template.website_item.events({
 						)
 					// console.log("dislike to like +1");
 				}
+				console.log(web.title);
+				Session.set("reccomendFilter",web.title);
 			}
 		} else {
 			alert("Please login to vote!");

@@ -24,7 +24,5 @@ accounts-password
 session
 iron:router
 http
-useraccounts:core
 accounts-ui-unstyled
 accounts-ui
-mrt:bootstrap-3
